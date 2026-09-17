@@ -1,0 +1,21 @@
+# Private machine configuration and credentials
+config.local.json
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# HomeKit identity and pairing material, including backups
+*.state
+*.state.*
+*.log
+
+# Local environment and legacy controller
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+/pc_homekit_old.py
+.DS_Store

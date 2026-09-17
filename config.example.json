@@ -1,0 +1,13 @@
+{
+  "PC_NAME": "PC",
+  "PC_IP": "",
+  "PC_MAC": "",
+  "WOL_SOURCE_IP": "",
+  "WOL_BROADCAST_IP": "",
+  "AGENT_PORT": 8765,
+  "AGENT_TOKEN": "",
+  "HOMEKIT_PORT": 51831,
+  "PERSIST_FILE": "pc_homekit.state",
+  "PINCODE": "",
+  "POLL_INTERVAL": 5
+}
