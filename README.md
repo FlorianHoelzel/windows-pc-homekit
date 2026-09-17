@@ -15,9 +15,9 @@ setup uses a direct Ethernet cable between the Pi and PC, with Wi-Fi carrying
 agent requests. Configure the source and broadcast addresses for your network.
 Wake-on-LAN must be enabled in the PC's firmware and Ethernet adapter settings.
 
-The current HomeKit interface offers power control only. The agent also has
-restart, sleep, lock and application-launch endpoints; these are not exposed by
-the current controller. Shutdown and restart force applications to close.
+The HomeKit interface offers power control only. The agent accepts authenticated
+`GET /status` and `POST /shutdown` requests. Other paths return 404 after
+authentication. Shutdown forces applications to close.
 
 ## Controller setup
 
@@ -77,8 +77,7 @@ The existing task was not included in this repository; the following is a
 setup guide, not an export of that task.
 
 1. Create a task with an **At log on** trigger for your Windows user.
-2. Select **Run only when user is logged on** if you use the agent's desktop
-   features, such as locking or launching apps.
+2. Select **Run only when user is logged on** for this logon-based setup.
 3. Add a **Start a program** action. Set **Program/script** to the full path
    of your `python.exe` (or `pythonw.exe` to hide the console).
 4. Set **Add arguments** to the quoted full path of `pc_agent.py` and

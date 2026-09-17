@@ -1,10 +1,7 @@
-import ctypes
 import http.server
-import os
 import subprocess
 import threading
 import time
-import webbrowser
 
 
 # ============================================================
@@ -25,7 +22,7 @@ TOKEN = settings["AGENT_TOKEN"]
 def delayed_action(function):
     """
     Wartet kurz, damit die HTTP-Antwort noch gesendet werden kann,
-    bevor z. B. Shutdown, Neustart oder Standby ausgeführt wird.
+    bevor der PC heruntergefahren wird.
     """
 
     def worker():
@@ -48,52 +45,6 @@ def shutdown_pc():
         "/t",
         "0"
     ])
-
-
-def restart_pc():
-    print("Restarting PC...")
-
-    subprocess.run([
-        "shutdown",
-        "/r",
-        "/f",
-        "/t",
-        "0"
-    ])
-
-
-def sleep_pc():
-    print("Putting PC to sleep...")
-
-    ctypes.windll.powrprof.SetSuspendState(
-        False,
-        True,
-        False
-    )
-
-
-def lock_pc():
-    print("Locking PC...")
-
-    ctypes.windll.user32.LockWorkStation()
-
-
-def launch_steam():
-    print("Launching Steam Big Picture...")
-
-    os.startfile("steam://open/bigpicture")
-
-
-def launch_spotify():
-    print("Launching Spotify...")
-
-    os.startfile("spotify:")
-
-
-def launch_browser():
-    print("Launching browser...")
-
-    webbrowser.open("https://www.google.com")
 
 
 # ============================================================
@@ -146,30 +97,6 @@ class PCRequestHandler(http.server.BaseHTTPRequestHandler):
         if self.path == "/shutdown":
             self.send_text(200, "shutdown")
             delayed_action(shutdown_pc)
-
-        elif self.path == "/restart":
-            self.send_text(200, "restart")
-            delayed_action(restart_pc)
-
-        elif self.path == "/sleep":
-            self.send_text(200, "sleep")
-            delayed_action(sleep_pc)
-
-        elif self.path == "/lock":
-            self.send_text(200, "lock")
-            delayed_action(lock_pc)
-
-        elif self.path == "/launch/steam":
-            launch_steam()
-            self.send_text(200, "steam")
-
-        elif self.path == "/launch/spotify":
-            launch_spotify()
-            self.send_text(200, "spotify")
-
-        elif self.path == "/launch/browser":
-            launch_browser()
-            self.send_text(200, "browser")
 
         else:
             self.send_text(404, "Not found")
